@@ -25,3 +25,10 @@ wb-mqtt-mbgate.conf
 wb-mqtt-opcua.conf
 wb-security.conf
 ssh/
+mosquitto/conf.d/00default_listener.conf.dpkg-new
+mosquitto/conf.d/10listeners.conf.dpkg-new
+mosquitto/conf.d/20bridges.conf.dpkg-new
+mosquitto/conf.d/21bridge.conf.example.dpkg-new
+wb-mqtt-serial.conf.ucf-dist
+wb-scenarios.conf
+wb-webui.conf.ucf-dist

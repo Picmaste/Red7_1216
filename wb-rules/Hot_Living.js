@@ -10,9 +10,12 @@
 
 // Переменные 
 var _fh_namber="Living";
-var _fh_condition="wb-w1/28-95e1ae2ecdff";   // Адрес датчика температуры 
+var _fh_condition="wb-msw-v4_137/Temperature";   // Адрес датчика температуры 
 var _fh_frequency=10000;   // частота в мс.
-var _fh_rele="wb-mr6c_15/K1";
+var _fh_rele="_wb-mr6cu_145/K1";  // !!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
 var _fh_delta=1;         // Delta
 var timer_id_fh1 
 var _fh_frequency=10000;   // частота в мс.
@@ -112,7 +115,7 @@ dn: {
   defineRule({
     whenChanged: _fh_condition,
    then: function (newValue, devName, cellName) {
-        log ("Изменилась температура" );
+        log ("Изменилась температура в гостинной" );
               dev[_fh_value]=dev[_fh_condition];
         }
   });

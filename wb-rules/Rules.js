@@ -9,9 +9,10 @@
 
     var device_1="wb-mr6c_233"         // A2  Модуль реле  
     var device_2="wb-mr6c_31"       // A3  "Модуль реле "
-    var device_4="wb-mr6cu_145"      // A8  "Модуль реле 
     var device_3="wb-mr6c_15"      // 
-   
+       
+    var device_4="wb-mr6cu_145"      // A8  Отопление 
+    
     var DD_input_Holl="wb-gpio/EXT2_IN1";   // Датчик движения в коридоре 
     var DD_input_CLoset="wb-gpio/EXT2_IN3";   // Датчик движения в Ванной
     var DD_input_CLoset2="wb-gpio/EXT2_IN2";   // Датчик движения в туалете
@@ -22,12 +23,13 @@
 
 // Не трогать   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 
-
-
-
+//137 кухня
+//104 спальня
+//108 коридор
 // Не трогать  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 // Input 
+//  var device_1="wb-mr6c_233"
 
 var button_Entity1=device_1+"/Input 1"
 var button_Entity2=device_1+"/Input 2"
@@ -36,12 +38,16 @@ var button_Entity4=device_1+"/Input 4"
 var button_Entity5=device_1+"/Input 5"
 var button_Entity6=device_1+"/Input 6"
 
+//  var device_2="wb-mr6c_31"    
+
 var button_Entity7=device_2+"/Input 1"
 var button_Entity8=device_2+"/Input 2"
 var button_Entity9=device_2+"/Input 3"
 var button_Entity10=device_2+"/Input 4" // Бра . Мастер
 var button_Entity11=device_2+"/Input 5"  //Коридор 
 var button_Entity12=device_2+"/Input 6"   //Ванная свет
+
+
 
 var button_Entity13=device_3+"/Input 1"
 var button_Entity14=device_3+"/Input 2"   // Спальня
@@ -50,7 +56,7 @@ var button_Entity16=device_3+"/Input 4"  //  гостинная
 var button_Entity17=device_3+"/Input 5"  //кухня 
 var button_Entity18=device_3+"/Input 6"
 
-
+         // A2  Модуль реле
 
 var _rele_Entity1=device_1+"/K1";       // Кухня Лстра 
 var _rele_Entity2=device_1+"/K2";       // Гардероб Свет
@@ -59,23 +65,23 @@ var _rele_Entity4=device_1+"/K4";      // Холл точки
 var _rele_Entity5=device_1+"/K5";      // Гардероб Подсветка
 var _rele_Entity6=device_1+"/K6";    // Бра
 
+//  var device_2="wb-mr6c_31" 
+
 var _rele_Entity7=device_2+"/K1";   // sleeping Люстра 
-var _rele_Entity8=device_2+"/K2";    // sleeping bra
+var _rele_Entity8=device_2+"/K2";    // sleeping точки
 var _rele_Entity9=device_2+"/K3";     // Холл 
 var _rele_Entity10=device_2+"/K4";    // Вентилятор
-var _rele_Entity11=device_2+"/K5";    // Прихожая 
-var _rele_Entity12=device_2+"/K6";
+var _rele_Entity11=device_2+"/K5";    // Ванная  
+var _rele_Entity12=device_2+"/K6";    // 
 
-var _rele_Entity13=device_3+"/K1";
-var _rele_Entity14=device_3+"/K2"; //спальня
-var _rele_Entity15=device_3+"/K3"; //гардероб
-var _rele_Entity16=device_3+"/K4";   //  кухня
-var _rele_Entity17=device_3+"/K5";   // гостинная 
+var device_3="wb-mr6c_15"      // 
+
+var _rele_Entity13=device_3+"/K1";    // Гостинная Точки 
+var _rele_Entity14=device_3+"/K2"; // Кухня
+var _rele_Entity15=device_3+"/K3"; //  // Гостинная Люстра 
+var _rele_Entity16=device_3+"/K4";   // 
+var _rele_Entity17=device_3+"/K5";   //  
 var _rele_Entity18=device_3+"/K6";
-
-var _rele_Entity13=device_4+"/K1"; // точка Гостинная 
-var _rele_Entity14=device_4+"/K2"; // точка кухня 
-var _rele_Entity15=device_4+"/K3"; // Гостинная Люстра 
 
 
 
@@ -166,6 +172,66 @@ var b17_long_interval=null
 // //////////////////////////////////////////////////////////////////////////////////////
 
                                  //  Спальня 
+
+defineVirtualDevice("Entity7",{
+  title: "Кухня ,  Люстра  ",
+  cells: {
+    switch: {
+          type: "switch",
+value: false
+},
+  }
+});
+
+defineRule({    // 
+ whenChanged: ["Entity7/switch",_rele_Entity7],
+   then: function (newValue, devName, cellName) {
+      if (newValue){
+      dev["All_Lite_Off/switch"] = true;
+        }
+  if (devName=="Entity7"){
+ dev[_rele_Entity7]=newValue;
+        }
+     else 
+     {
+ dev["Entity7/switch"]=dev[_rele_Entity7];
+     } 
+     }  
+ });
+
+
+
+defineVirtualDevice("Entity8",{
+  title: "Кухня ,  Люстра  ",
+  cells: {
+    switch: {
+          type: "switch",
+value: false
+},
+  }
+});
+
+defineRule({    // 
+ whenChanged: ["Entity8/switch",_rele_Entity8],
+   then: function (newValue, devName, cellName) {
+      if (newValue){
+      dev["All_Lite_Off/switch"] = true;
+        }
+  if (devName=="Entity8"){
+ dev[_rele_Entity8]=newValue;
+        }
+     else 
+     {
+ dev["Entity8/switch"]=dev[_rele_Entity8];
+     } 
+     }  
+ });
+
+
+
+
+
+
 defineRule({
     whenChanged: button_Entity14,
     then: function (newValue, devName, cellName) {
@@ -192,10 +258,8 @@ defineRule({
                     dev[_rele_Entity13] =false;
                     dev[_rele_Entity14] =false;
                     dev[_rele_Entity15] =false;
-                    dev[_rele_Entity16] =false;
-                    dev[_rele_Entity17] =false;
-                    dev[_rele_Entity18] =false;
-                    dev[_rele_Entity12] =false;
+                  
+                 
               log("LONG PRESS ");
                 }
             }, 1200);
@@ -225,7 +289,7 @@ defineRule({
                 clearTimeout(b14_short_interval);
                 b14_short_interval=null
                   log ("Singl");
-              }, 850);
+              }, 1000);
           log ("bХ_short_interval = {}",b14_short_interval);
         }
     }
@@ -235,51 +299,175 @@ defineRule({
   
 // //////////////////////////////////////////////////////////////////////////////////////
 
-                                 //  Кнопка 
+
+
+
+
+/////// Entity9
+
+defineVirtualDevice("Entity9", {
+  title: "Коридор,  Свет  ",	
+  cells: {
+    switch: {
+          type: "switch",
+			value: false
+    	},
+  }
+});
+
+defineRule({    // 
+  whenChanged: ["Entity9/switch",_rele_Entity9], 
+   then: function (newValue, devName, cellName) {
+      if (newValue){
+      dev["All_Lite_Off/switch"] = true;
+        }
+     if (devName=="Entity9"){
+       dev[_rele_Entity9] =  newValue;
+        }	
+     else 
+     {
+      dev["Entity9/switch"] = dev[_rele_Entity9];
+     } 
+     }  
+ });
+
+
+
+/////// 4
+
+defineVirtualDevice("Entity4", {
+  title: "Коридор,  Подсвета ",	
+  cells: {
+    switch: {
+          type: "switch",
+			value: false
+    	},
+  }
+});
+
+defineRule({    // 
+  whenChanged: ["Entity4/switch",_rele_Entity4], 
+   then: function (newValue, devName, cellName) {
+      if (newValue){
+      dev["All_Lite_Off/switch"] = true;
+        }
+     if (devName=="Entity4"){
+       dev[_rele_Entity4] =  newValue;
+        }	
+     else 
+     {
+      dev["Entity4/switch"] = dev[_rele_Entity4];
+     } 
+     }  
+ });
+
+
+
+
+/////////////////////////////////////////////
+                                 //  Гардероб 
+
+defineVirtualDevice("Entity2",{
+  title: "Кухня ,  Люстра  ",
+  cells: {
+    switch: {
+          type: "switch",
+value: false
+},
+  }
+});
+
+defineRule({    // 
+ whenChanged: ["Entity2/switch",_rele_Entity2],
+   then: function (newValue, devName, cellName) {
+      if (newValue){
+      dev["All_Lite_Off/switch"] = true;
+        }
+  if (devName=="Entity2"){
+ dev[_rele_Entity2]=newValue;
+        }
+     else 
+     {
+ dev["Entity2/switch"]=dev[_rele_Entity2];
+     } 
+     }  
+ });
+
+
+defineVirtualDevice("Entity5",{
+  title: "Кухня ,  Люстра  ",
+  cells: {
+    switch: {
+          type: "switch",
+value: false
+},
+  }
+});
+
+defineRule({    // 
+ whenChanged: ["Entity5/switch",_rele_Entity5],
+   then: function (newValue, devName, cellName) {
+      if (newValue){
+      dev["All_Lite_Off/switch"] = true;
+        }
+  if (devName=="Entity5"){
+ dev[_rele_Entity5]=newValue;
+        }
+     else 
+     {
+ dev["Entity5/switch"]=dev[_rele_Entity5];
+     } 
+     }  
+ });
+
+
+
+
+
+
 defineRule({
     whenChanged: button_Entity15,
     then: function (newValue, devName, cellName) {
       
       
-      if (newValue){
+      if (newValue) { 
+        
             // Нажато 
-                     b15_long_interval=setTimeout(function () { 
+          if(b15_short_interval) {
+              clearTimeout(b15_short_interval);
+              b15_short_interval=null;
+              dev[_rele_Entity5] = !dev[_rele_Entity5] ;           
+              log("Dubl Press")
+              }
+          else      
+            {
+            b15_long_interval=setTimeout(function () { 
                 if  (dev[button_Entity15]) {
-                    b15_flag_long=1;
-                    clearTimeout(b15_long_interval);
-                    dev[_rele_Entity2] =false;
-                    dev[_rele_Entity5] =false;
-              log("LONG PRESS ");
+                        b15_flag_long=1;
+                        clearTimeout(b15_long_interval);
+                        dev[_rele_Entity2] =false;
+                        dev[_rele_Entity5] =false;
+                        log("LONG PRESS ");
                 }
-            }, 1200);
-        }   
+              }, 1200);
+             }
+          }      
         else{  
             // Отпущенно 
-          log ("__________Отпущенно----------");
-                if (b15_flag_long){
+            log ("__________Отпущенно----------");
+            if (b15_flag_long){
                   b15_flag_long=null;
-                return;
+                  log("LONG PRESS  ");
             }
-           log ("NOT b_short_interval = {}",b15_short_interval);
-            clearTimeout(b15_long_interval); // остановили таймер Long
-           log ("bЧ_short_interval = {}",b15_short_interval);
-           
-          if (b15_short_interval) {
-           log ("NOT");
-                clearTimeout(b15_short_interval);
-                b15_short_interval=null;
-                dev[_rele_Entity5] = !dev[_rele_Entity5] ;
-                  log ("DUBL");
-                return;
-            }
-            
-            b15_short_interval=setTimeout(function () { 
-                dev[_rele_Entity2] = !dev[_rele_Entity2] ;        
+            else 
+            {
+             clearTimeout(b15_long_interval); // остановили таймер Long
+             b15_short_interval=setTimeout(function () { 
+                 dev[_rele_Entity2] = !dev[_rele_Entity2] ;        
                 clearTimeout(b15_short_interval);
                 b15_short_interval=null
-                  log ("Singl");
-              }, 850);
-          log ("bХ_short_interval = {}",b15_short_interval);
+              }, 1000);
+            }
         }
     }
 });
@@ -287,7 +475,66 @@ defineRule({
 //////
 // //////////////////////////////////////////////////////////////////////////////////////
 
-                                 //  Кнопка 
+                                 //  Гостинная 
+
+
+
+defineVirtualDevice("Entity13",{
+  title: "Кухня ,  Люстра  ",
+  cells: {
+    switch: {
+          type: "switch",
+value: false
+},
+  }
+});
+
+
+defineRule({    // 
+ whenChanged: ["Entity13/switch",_rele_Entity13],
+   then: function (newValue, devName, cellName) {
+      if (newValue){
+      dev["All_Lite_Off/switch"] = true;
+        }
+  if (devName=="Entity13"){
+ dev[_rele_Entity13]=newValue;
+        }
+     else 
+     {
+ dev["Entity13/switch"]=dev[_rele_Entity13];
+     } 
+     }  
+ });
+
+
+
+defineVirtualDevice("Entity15",{
+  title: " Гостинная ,  Люстра  ",
+  cells: {
+    switch: {
+          type: "switch",
+value: false
+},
+  }
+});
+
+defineRule({    // 
+ whenChanged: ["Entity15/switch",_rele_Entity15],
+   then: function (newValue, devName, cellName) {
+      if (newValue){
+      dev["All_Lite_Off/switch"] = true;
+        }
+  if (devName=="Entity15"){
+ dev[_rele_Entity15]=newValue;
+        }
+     else 
+     {
+ dev["Entity15/switch"]=dev[_rele_Entity15];
+     } 
+     }  
+ });
+
+
 defineRule({
     whenChanged: button_Entity16,
     then: function (newValue, devName, cellName) {
@@ -337,8 +584,67 @@ defineRule({
 });
 
 // //////////////////////////////////////////////////////////////////////////////////////
+//  Кухня
 
-                                 //  Кнопка 
+
+
+
+defineVirtualDevice("Entity1",{
+  title: "Кухня ,  Люстра  ",
+  cells: {
+    switch: {
+          type: "switch",
+value: false
+},
+  }
+});
+
+defineRule({    // 
+ whenChanged: ["Entity1/switch",_rele_Entity1],
+   then: function (newValue, devName, cellName) {
+      if (newValue){
+      dev["All_Lite_Off/switch"] = true;
+        }
+  if (devName=="Entity1"){
+ dev[_rele_Entity1]=newValue;
+        }
+     else 
+     {
+ dev["Entity1/switch"]=dev[_rele_Entity1];
+     } 
+     }  
+ });
+
+
+defineVirtualDevice("Entity14",{
+  title: "Кухня ,  подсветка  ",
+  cells: {
+    switch: {
+          type: "switch",
+value: false
+},
+  }
+});
+
+defineRule({    // 
+ whenChanged: ["Entity14/switch",_rele_Entity14],
+   then: function (newValue, devName, cellName) {
+      if (newValue){
+      dev["All_Lite_Off/switch"] = true;
+        }
+  if (devName=="Entity14"){
+ dev[_rele_Entity14]=newValue;
+        }
+     else 
+     {
+ dev["Entity14/switch"]=dev[_rele_Entity14];
+     } 
+     }  
+ });
+
+
+
+
 defineRule({
     whenChanged: button_Entity17,
     then: function (newValue, devName, cellName) {
@@ -387,7 +693,64 @@ defineRule({
     }
 });
 
-//////
+//////   Ванная
+
+defineVirtualDevice("Entity12",{
+  title: "Ванная,  Свет  ",
+  cells: {
+    switch: {
+          type: "switch",
+value: false
+},
+  }
+});
+
+defineRule({    // 
+ whenChanged: ["Entity12/switch",_rele_Entity12],
+   then: function (newValue, devName, cellName) {
+      if (newValue){
+      dev["All_Lite_Off/switch"] = true;
+        }
+  if (devName=="Entity12"){
+ dev[_rele_Entity12]=newValue;
+        }
+     else 
+     {
+ dev["Entity12/switch"]=dev[_rele_Entity12];
+     } 
+     }  
+ });
+
+
+
+defineVirtualDevice("Entity11",{
+  title: "Ванная ,  подсветка  ",
+  cells: {
+    switch: {
+          type: "switch",
+value: false
+},
+  }
+});
+
+defineRule({    // 
+ whenChanged: ["Entity11/switch",_rele_Entity11],
+   then: function (newValue, devName, cellName) {
+      if (newValue){
+      dev["All_Lite_Off/switch"] = true;
+        }
+  if (devName=="Entity11"){
+ dev[_rele_Entity11]=newValue;
+        }
+     else 
+     {
+ dev["Entity11/switch"]=dev[_rele_Entity11];
+     } 
+     }  
+ });
+
+
+
 
                                  //  Кнопка 
 defineRule({
@@ -485,6 +848,37 @@ defineRule({
         }
     }
 });
+
+////////////////////////////////
+///  БРА 
+
+defineVirtualDevice("Entity6",{
+  title: " Коридор , Бра  ",
+  cells: {
+    switch: {
+          type: "switch",
+value: false
+},
+  }
+});
+
+defineRule({    // 
+ whenChanged: ["Entity6/switch",_rele_Entity6],
+   then: function (newValue, devName, cellName) {
+      if (newValue){
+      dev["All_Lite_Off/switch"] = true;
+        }
+  if (devName=="Entity6"){
+ dev[_rele_Entity6]=newValue;
+        }
+     else 
+     {
+ dev["Entity6/switch"]=dev[_rele_Entity6];
+     } 
+     }  
+ });
+
+
 
                                  //  Кнопка 
 defineRule({
@@ -642,21 +1036,9 @@ defineVirtualDevice("All_Lite_Off", {
           dev[_rele_Entity16]=false;
           dev[_rele_Entity17]=false;
           dev[_rele_Entity18]=false;
-          dev[_rele_Entity19]=false;
-          dev[_rele_Entity20]=false;
-          dev[_rele_Entity21]=false;
-          dev[_rele_Entity22]=false;
-          dev[_rele_Entity23]=false;
-          dev[_rele_Entity24]=false;
-          dev[_rele_Entity25]=false;
-          dev[_rele_Entity26]=false;
-          dev[_rele_Entity27]=false;
-          dev[_Dim_Entity1]=false;
-          dev[_Dim_Entity2]=false;
-          dev[_Dim_Entity3]=false;
+         
         }
-   
-     }
+             }
 });
 
 
@@ -704,15 +1086,7 @@ defineRule({  //     Включение сценария все ушли .
           dev[_rele_Entity17]=false;
           dev[_rele_Entity18]=false;
           dev[_rele_Entity19]=false;
-          dev[_rele_Entity20]=false;
-          dev[_rele_Entity21]=false;
-          dev[_rele_Entity22]=false;
-          dev[_rele_Entity23]=false;
-          dev[_rele_Entity24]=false;
-          dev[_rele_Entity25]=false;
-          dev[_rele_Entity26]=false;
-          dev[_rele_Entity27]=false;
-          
+         
         } 
      }
 });
