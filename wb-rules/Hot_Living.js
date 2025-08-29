@@ -12,7 +12,7 @@
 var _fh_namber="Living";
 var _fh_condition="wb-msw-v4_137/Temperature";   // Адрес датчика температуры 
 var _fh_frequency=10000;   // частота в мс.
-var _fh_rele="_wb-mr6cu_145/K1";  // !!!!!!!!!!!!!!!!!!!!!!!!!!
+var _fh_rele="_wb-mr6c_15/K1";  // !!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 

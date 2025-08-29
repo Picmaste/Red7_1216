@@ -6,13 +6,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
     var device_1="wb-mr6c_233"         // A2  Модуль реле  
     var device_2="wb-mr6c_31"       // A3  "Модуль реле "
-    var device_3="wb-mr6c_15"      // 
+    var device_3="wb-mr6c_15"      // tut
        
     var device_4="wb-mr6cu_145"      // A8  Отопление 
-    
+     var wd_Motion="wb-msw-v4_51/Current Motion"   
     var DD_input_Holl="wb-gpio/EXT2_IN1";   // Датчик движения в коридоре 
     var DD_input_CLoset="wb-gpio/EXT2_IN3";   // Датчик движения в Ванной
     var DD_input_CLoset2="wb-gpio/EXT2_IN2";   // Датчик движения в туалете
@@ -26,7 +25,7 @@
 //137 кухня
 //104 спальня
 //108 коридор
-// Не трогать  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// Не трогать  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^F^^^^^^^^
 
 // Input 
 //  var device_1="wb-mr6c_233"
@@ -74,14 +73,16 @@ var _rele_Entity10=device_2+"/K4";    // Вентилятор
 var _rele_Entity11=device_2+"/K5";    // Ванная  
 var _rele_Entity12=device_2+"/K6";    // 
 
-var device_3="wb-mr6c_15"      // 
+//var device_3="wb-mr6c_145"      // 
 
-var _rele_Entity13=device_3+"/K1";    // Гостинная Точки 
-var _rele_Entity14=device_3+"/K2"; // Кухня
-var _rele_Entity15=device_3+"/K3"; //  // Гостинная Люстра 
-var _rele_Entity16=device_3+"/K4";   // 
-var _rele_Entity17=device_3+"/K5";   //  
-var _rele_Entity18=device_3+"/K6";
+var _rele_Entity13=device_4+"/K1";    // Гостинная Точки 
+var _rele_Entity14=device_4+"/K2"; // Кухня
+var _rele_Entity15=device_4+"/K3"; //  // Гостинная Люстра 
+var _rele_Entity16=device_4+"/K4";   // 
+var _rele_Entity17=device_4+"/K5";   //  
+var _rele_Entity18=device_4+"/K6";
+
+
 
 
 
@@ -228,8 +229,31 @@ defineRule({    //
  });
 
 
+/////
+//Датчик движениия
 
 
+defineRule({    // 
+ whenChanged: wd_Motion,
+   then: function (newValue, devName, cellName) {
+   
+     log ("-----------wd_Motion______________")
+     if (newValue>200){
+      dev["All_Lite_Off/switch"] = true;
+         dev[_rele_Entity11]=true;
+     //   dev[_rele_Entity10]=true;
+       dev[_rele_Entity12]=true;
+        }
+ else {
+ //       dev["All_Lite_Off/switch"] =false;
+     //    dev[_rele_Entity11]=false;
+      //  dev[_rele_Entity12]=false;
+   
+ }
+
+   
+     }  
+ });
 
 
 defineRule({
@@ -423,33 +447,42 @@ defineRule({    //
 
 
 
-
+///// tut
 
 defineRule({
     whenChanged: button_Entity15,
     then: function (newValue, devName, cellName) {
       
-      
+      log(" button_Entity15  newValue={}, devName={}, cellName ={} ", newValue, devName, cellName); 
+   
       if (newValue) { 
-        
+     
+      
+       log("      Pres           ");
             // Нажато 
           if(b15_short_interval) {
-              clearTimeout(b15_short_interval);
-              b15_short_interval=null;
-              dev[_rele_Entity5] = !dev[_rele_Entity5] ;           
+     
+            dev[_rele_Entity5] = !dev[_rele_Entity5] ;           
               log("Dubl Press")
+             b15_flag_long=1;
+            clearTimeout(b15_short_interval);
+             b15_short_interval=null;
+            clearTimeout(b15_long_interval);
+            b15_long_interval=null;
+             
               }
           else      
             {
             b15_long_interval=setTimeout(function () { 
                 if  (dev[button_Entity15]) {
                         b15_flag_long=1;
-                        clearTimeout(b15_long_interval);
+                      
                         dev[_rele_Entity2] =false;
                         dev[_rele_Entity5] =false;
+                    clearTimeout(b15_long_interval);
                         log("LONG PRESS ");
                 }
-              }, 1200);
+              }, 1500);
              }
           }      
         else{  
@@ -457,16 +490,19 @@ defineRule({
             log ("__________Отпущенно----------");
             if (b15_flag_long){
                   b15_flag_long=null;
-                  log("LONG PRESS  ");
+              log(" Duble or Long Press")
             }
             else 
             {
              clearTimeout(b15_long_interval); // остановили таймер Long
              b15_short_interval=setTimeout(function () { 
                  dev[_rele_Entity2] = !dev[_rele_Entity2] ;        
-                clearTimeout(b15_short_interval);
+               
                 b15_short_interval=null
-              }, 1000);
+               log(" Single Press");
+               b15_short_interval=null;
+                          }, 1000);
+              log("b15_short_interval = {}",b15_short_interval); 
             }
         }
     }
@@ -559,7 +595,7 @@ defineRule({
                   b16_flag_long=null;
                 return;
             }
-           log ("NOT bЧ_short_interval = {}",b16_short_interval);
+           log ("NOT 16_short_interval = {}",b16_short_interval);
             clearTimeout(b16_long_interval); // остановили таймер Long
          
            

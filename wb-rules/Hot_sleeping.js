@@ -12,7 +12,7 @@
 var _fh_namber="Sleeping";
 var _fh_condition="wb-msw-v4_104/Temperature";   // Адрес датчика температуры 
 var _fh_frequency=10000;   // частота в мс.
-var _fh_rele="_wb-mr6cu_145/K2";  // !!!!!!!!!!!!!!!!!!!!!!!!!!
+var _fh_rele="wb-mr6c_15/K2";  // !!!!!!!!!!!!!!!!!!!!!!!!!!
 var _fh_delta=1;         // Delta
 var timer_id_fh1 
 var _fh_frequency=10000;   // частота в мс.

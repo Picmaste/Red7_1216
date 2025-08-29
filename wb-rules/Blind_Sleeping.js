@@ -14,7 +14,7 @@ var timer_id_fh1
 var _fh_frequency=10000;   // частота в мс.
 
 
-	var device_roll_Position = "aok-am68_0x030100/Position"; 
+	var device_roll_Position="aok-am68_0x030100/Position"; 
 	//var rele_up = "K1"
 	//var rele_dn = "K2"
 	var no_dubl = 0;
@@ -36,7 +36,7 @@ var _fh_frequency=10000;   // частота в мс.
 	
   
 defineVirtualDevice(_Name_of_room+"_Blind",  {
-  title: _Name_of_room+"Кухня Шторы ",
+  title: _Name_of_room+"   Спальня Шторы ",
  	cells: {
     
       tag: {
